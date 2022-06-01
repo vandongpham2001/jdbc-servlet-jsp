@@ -31,6 +31,9 @@ public class CategoryAPI extends HttpServlet {
 		response.setContentType("application/json");
 		CategoryModel categoryModel =  HttpUtil.of(request.getReader()).toModel(CategoryModel.class);
 		categoryModel.setCreatedBy(((UserModel) SessionUtil.getInstance().getValue(request, "USERMODEL")).getUserName());
+		if (categoryModel.getCreatedBy() == null) {
+			categoryModel.setCreatedBy("");
+		}
 		categoryModel = categoryService.save(categoryModel);
 		mapper.writeValue(response.getOutputStream(), categoryModel);
 	}
@@ -41,7 +44,10 @@ public class CategoryAPI extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		CategoryModel updateCategory =  HttpUtil.of(request.getReader()).toModel(CategoryModel.class);
-//		updateCategory.setModifiedBy(((UserModel) SessionUtil.getInstance().getValue(request, "USERMODEL")).getUserName());
+		updateCategory.setModifiedBy(((UserModel) SessionUtil.getInstance().getValue(request, "USERMODEL")).getUserName());
+		if (updateCategory.getModifiedBy() == null) {
+			updateCategory.setModifiedBy("");
+		}
 		System.out.println("\ndoPut:"+ updateCategory.getName());
 		System.out.println("doPut:"+ updateCategory.getCode());
 		updateCategory = categoryService.update(updateCategory);

@@ -48,16 +48,16 @@ public class CategoryDAO extends AbstractDAO<CategoryModel> implements ICategory
 	@Override
 	public void update(CategoryModel updateCategory) {
 		// TODO Auto-generated method stub
-		StringBuilder sql = new StringBuilder("UPDATE category SET name = ?, code = ? where id = ?");
-//		StringBuilder sql = new StringBuilder("UPDATE category SET name = ?, code = ?,");
-//		sql.append(" createddate = ?, createdby = ?, modifieddate = ?, modifiedby = ? WHERE id = ?");
+//		StringBuilder sql = new StringBuilder("UPDATE category SET name = ?, code = ? where id = ?");
+		StringBuilder sql = new StringBuilder("UPDATE category SET name = ?, code = ?,");
+		sql.append(" createddate = ?, createdby = ?, modifieddate = ?, modifiedby = ? WHERE id = ?");
 		System.out.println("DAO:"+ updateCategory.getName());
 		System.out.println("DAO:"+ updateCategory.getCode());
 		System.out.println("DAO query:" + sql.toString());
-//		update(sql.toString(), updateCategory.getName(), updateCategory.getCode(), updateCategory.getCreatedDate(), 
-//				updateCategory.getCreatedBy(), updateCategory.getModifiedDate(), 
-//				updateCategory.getModifiedBy(), updateCategory.getId());
-		update(sql.toString(), updateCategory.getName(), updateCategory.getCode(), updateCategory.getId());
+		update(sql.toString(), updateCategory.getName(), updateCategory.getCode(), updateCategory.getCreatedDate(), 
+				updateCategory.getCreatedBy(), updateCategory.getModifiedDate(), 
+				updateCategory.getModifiedBy(), updateCategory.getId());
+//		update(sql.toString(), updateCategory.getName(), updateCategory.getCode(), updateCategory.getId());
 	}
 
 	@Override

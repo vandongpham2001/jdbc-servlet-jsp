@@ -16,9 +16,9 @@ import com.laptrinhjavaweb.service.INewService;
 import com.laptrinhjavaweb.utils.HttpUtil;
 import com.laptrinhjavaweb.utils.SessionUtil;
 
-@WebServlet(urlPatterns = {"/api-admin-new"})
+@WebServlet(urlPatterns = { "/api-admin-new" })
 public class NewAPI extends HttpServlet {
-	
+
 	@Inject
 	private INewService newService;
 
@@ -29,33 +29,40 @@ public class NewAPI extends HttpServlet {
 		ObjectMapper mapper = new ObjectMapper();
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		NewModel newModel =  HttpUtil.of(request.getReader()).toModel(NewModel.class);
+		NewModel newModel = HttpUtil.of(request.getReader()).toModel(NewModel.class);
 		newModel.setCreatedBy(((UserModel) SessionUtil.getInstance().getValue(request, "USERMODEL")).getUserName());
+		if (newModel.getCreatedBy() == null) {
+			newModel.setCreatedBy("");
+		}
 		newModel = newService.save(newModel);
 		mapper.writeValue(response.getOutputStream(), newModel);
 	}
-	
+
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		NewModel updateNew =  HttpUtil.of(request.getReader()).toModel(NewModel.class);
+		NewModel updateNew = HttpUtil.of(request.getReader()).toModel(NewModel.class);
+		System.out.println("doPutUser: "+((UserModel) SessionUtil.getInstance().getValue(request, "USERMODEL")).getUserName());
 		updateNew.setModifiedBy(((UserModel) SessionUtil.getInstance().getValue(request, "USERMODEL")).getUserName());
-		System.out.println("doPut:"+ updateNew.getCategoryCode());
-		System.out.println("doPut:"+ updateNew.getTitle());
-		System.out.println("doPut:"+ updateNew.getShortDescription());
-		System.out.println("doPut:"+ updateNew.getContent());
+		if (updateNew.getModifiedBy() == null) {
+			updateNew.setModifiedBy("");
+		}
+		System.out.println("doPut:" + updateNew.getCategoryCode());
+		System.out.println("doPut:" + updateNew.getTitle());
+		System.out.println("doPut:" + updateNew.getShortDescription());
+		System.out.println("doPut:" + updateNew.getContent());
 		updateNew = newService.update(updateNew);
 		mapper.writeValue(response.getOutputStream(), updateNew);
 	}
-	
+
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		NewModel newModel =  HttpUtil.of(request.getReader()).toModel(NewModel.class);
+		NewModel newModel = HttpUtil.of(request.getReader()).toModel(NewModel.class);
 		newService.delete(newModel.getIds());
 		mapper.writeValue(response.getOutputStream(), "{}");
 	}
