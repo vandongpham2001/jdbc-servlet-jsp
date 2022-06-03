@@ -1,3 +1,5 @@
+create database if not exists jspservletjdbc;
+
 use jspservletjdbc;
 
 CREATE TABLE role(
