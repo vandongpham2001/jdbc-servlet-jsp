@@ -103,7 +103,7 @@
 		<script>
 			var totalPages = ${model.totalPage};
 			var currentPage = ${model.page};
-			var limit = 2;
+			var limit = 10;
 			$(function () {
 				window.pagObj = $('#pagination').twbsPagination({
 					totalPages: totalPages,
@@ -138,10 +138,10 @@
 		            contentType: 'application/json',
 		            data: JSON.stringify(data),
 		            success: function (result) {
-		                window.location.href = "${CategoryURL}?type=list&maxPageItem=2&page=1&message=delete_success";
+		                window.location.href = "${CategoryURL}?type=list&maxPageItem=10&page=1&message=delete_success";
 		            },
 		            error: function (error) {
-		            	window.location.href = "${CategoryURL}?type=list&maxPageItem=2&page=1&message=error_system";
+		            	window.location.href = "${CategoryURL}?type=list&maxPageItem=10&page=1&message=error_system";
 		            }
 		        });
 		    }
